@@ -1,24 +1,31 @@
 package com.ryanv97.blokkit.entity;
 
+import com.ryanv97.blokkit.Blokkit;
+import com.ryanv97.blokkit.client.gui.GuiName;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 public class EntityBlokkit extends EntityTameable
 {
     private int exp;
     private int level;
+    String name = "Blokkit";
+    private boolean canLevel = false;
 
     public EntityBlokkit(World world)
     {
@@ -60,6 +67,10 @@ public class EntityBlokkit extends EntityTameable
     protected void updateAITasks()
     {
         super.updateAITasks();
+        if(canLevel)
+        {
+            this.setCustomNameTag(EnumChatFormatting.GOLD+"!"+EnumChatFormatting.WHITE+ name +EnumChatFormatting.GOLD+"!");
+        }
     }
 
     public void levelUp()
@@ -69,6 +80,8 @@ public class EntityBlokkit extends EntityTameable
         this.worldObj.playSoundAtEntity(entityplayer, "random.levelup", 1.0F, 1.0F);
         this.level += 1;
         this.exp = 0;
+        this.canLevel = true;
+
         //getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.hplvl + 5.0D);
         //this.maxhealth += 5.0F;
         //heal(this.maxhealth);
@@ -107,6 +120,8 @@ public class EntityBlokkit extends EntityTameable
                 if (!this.worldObj.isRemote)
                 {
                     setTamed(true);
+                    setAlwaysRenderNameTag(true);
+                    setCustomNameTag(name);
                     setPathToEntity((PathEntity)null);
                     this.aiSit.setSitting(false);
                     setHealth(40.0F);
@@ -144,12 +159,9 @@ public class EntityBlokkit extends EntityTameable
                 }
             }
         }else
-        if(!this.worldObj.isRemote)
+        if(isTamed()&&par1EntityPlayer.getCommandSenderName().equalsIgnoreCase(getOwnerName()))
         {
-            if(isTamed()&&par1EntityPlayer.getCommandSenderName().equalsIgnoreCase(getOwnerName()))
-            {
-                par1EntityPlayer.addChatMessage(new ChatComponentText("Exp: "+this.exp+"/150"+" Level: "+this.level));
-            }
+            par1EntityPlayer.openGui(Blokkit.instance,0,par1EntityPlayer.getEntityWorld(),this.getEntityId(),0,0);
         }
         return true;
     }
@@ -158,5 +170,10 @@ public class EntityBlokkit extends EntityTameable
     public EntityAgeable createChild(EntityAgeable var1)
     {
         return null;
+    }
+
+    public void setBlokkitName(String name)
+    {
+        this.setCustomNameTag(name);
     }
 }

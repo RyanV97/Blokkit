@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.util.MathHelper;
+import org.lwjgl.opengl.GL11;
 
 public class ModelBlokkit extends ModelBase
 {
@@ -116,6 +117,16 @@ public class ModelBlokkit extends ModelBase
     {
         EntityBlokkit entityBlokkit = (EntityBlokkit)entity;
 
+        this.body.offsetY=0F;
+        this.rightArm.offsetY=0F;
+        this.rightLeg.offsetY=0F;
+        this.leftArm.offsetY=0F;
+        this.leftLeg.offsetY=0F;
+        this.eye1.offsetY=0F;
+        this.eye2.offsetY=0F;
+        this.eye3.offsetY=0F;
+        this.eye4.offsetY=0F;
+
         this.rightLeg.rotateAngleX = (MathHelper.cos(f * 0.6662F) * 1.4F * f1 * 0.5F);
         this.leftArm.rotateAngleX = (MathHelper.cos(f * 0.6662F) * 1.4F * f1 * 0.5F);
         this.leftLeg.rotateAngleX = (MathHelper.cos(f * 0.6662F + 3.141593F) * 1.4F * f1 * 0.5F);
@@ -127,6 +138,17 @@ public class ModelBlokkit extends ModelBase
 
         if(entityBlokkit.isSitting())
         {
+            float offset = 0.15F;
+            this.body.offsetY=offset;
+            this.rightArm.offsetY=offset;
+            this.rightLeg.offsetY=offset;
+            this.leftArm.offsetY=offset;
+            this.leftLeg.offsetY=offset;
+            this.eye1.offsetY=offset;
+            this.eye2.offsetY=offset;
+            this.eye3.offsetY=offset;
+            this.eye4.offsetY=offset;
+
             this.rightArm.rotateAngleX += -((float)Math.PI / 5F);
             this.leftArm.rotateAngleX += -((float)Math.PI / 5F);
             this.rightLeg.rotateAngleX = -((float)Math.PI * 2F / 5F);

@@ -1,6 +1,7 @@
 package com.ryanv97.blokkit;
 
 import com.ryanv97.blokkit.handler.ConfigurationHandler;
+import com.ryanv97.blokkit.handler.GuiHandler;
 import com.ryanv97.blokkit.init.ModEntities;
 import com.ryanv97.blokkit.init.ModItems;
 import com.ryanv97.blokkit.init.Recipes;
@@ -29,7 +30,7 @@ public class Blokkit
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
 
-        NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
         ModItems.init();
         ModEntities.init();
