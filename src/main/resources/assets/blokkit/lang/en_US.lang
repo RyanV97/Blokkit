@@ -1,0 +1,14 @@
+#Items
+item.blokkit:diamondBlokkit.name=Diamond Blokkit
+item.blokkit:glowstoneBlokkit.name=Glowstone Blokkit
+item.blokkit:goldBlokkit.name=Gold Blokkit
+item.blokkit:grassBlokkit.name=Grass Blokkit
+item.blokkit:ironBlokkit.name=Iron Blokkit
+item.blokkit:stoneBlokkit.name=Stone Blokkit
+item.blokkit:woodBlokkit.name=Wood Blokkit
+
+#Blocks
+#tile.blokkit:blockName.name=Block Name
+
+#Other
+itemGroup.blokkit=Blokkits
