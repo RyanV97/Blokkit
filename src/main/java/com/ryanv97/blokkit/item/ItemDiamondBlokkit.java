@@ -5,6 +5,7 @@ import com.ryanv97.blokkit.entity.EntityDiamondBlokkit;
 import net.minecraft.block.Block;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Facing;
 import net.minecraft.util.MathHelper;
@@ -37,7 +38,7 @@ public class ItemDiamondBlokkit extends ItemBlokkit
             {
                 d0 = 0.5D;
             }
-            if(spawnCreature(par3World,(double)par4 + 0.5D, (double)par5 + d0, (double)par6 + 0.5D)!=null)
+            if(spawnCreature(par3World, (double)par4 + 0.5D, (double)par5 + d0, (double)par6 + 0.5D)!=null)
             {
                 par1ItemStack.stackSize-=1;
             }

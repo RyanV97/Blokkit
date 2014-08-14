@@ -1,6 +1,5 @@
 package com.ryanv97.blokkit.handler;
 
-import com.ryanv97.blokkit.client.gui.GuiName;
 import com.ryanv97.blokkit.client.gui.GuiStats;
 import com.ryanv97.blokkit.entity.EntityBlokkit;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -23,11 +22,6 @@ public class GuiHandler implements IGuiHandler{
             Entity entity = world.getEntityByID(x);
             if (entity instanceof EntityBlokkit)
                 return new GuiStats((EntityBlokkit)entity);
-        }
-        if(ID==1) {
-            Entity entity = world.getEntityByID(x);
-            if (entity instanceof EntityBlokkit)
-                return new GuiName((EntityBlokkit)entity);
         }
 
         return null;

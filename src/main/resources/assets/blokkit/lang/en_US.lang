@@ -10,5 +10,8 @@ item.blokkit:woodBlokkit.name=Wood Blokkit
 #Blocks
 #tile.blokkit:blockName.name=Block Name
 
+#Entity
+entity.Blokkit.diamondBlokkit.name=Diamond Blokkit
+
 #Other
 itemGroup.blokkit=Blokkits

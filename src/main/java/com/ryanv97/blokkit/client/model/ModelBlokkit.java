@@ -136,7 +136,7 @@ public class ModelBlokkit extends ModelBase
         this.rightArm.rotateAngleY = 0.0F;
         this.rightArm.rotateAngleX = (MathHelper.cos(f * 0.6662F + 3.141593F) * 1.4F * f1 * 0.5F);
 
-        if(entityBlokkit.isSitting())
+        if(entityBlokkit.isSitting()||entityBlokkit.isSneaking())
         {
             float offset = 0.15F;
             this.body.offsetY=offset;
@@ -156,6 +156,5 @@ public class ModelBlokkit extends ModelBase
             this.rightLeg.rotateAngleY = ((float)Math.PI / 10F);
             this.leftLeg.rotateAngleY = -((float)Math.PI / 10F);
         }
-
     }
 }

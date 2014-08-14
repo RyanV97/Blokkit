@@ -1,36 +1,35 @@
 package com.ryanv97.blokkit.entity;
 
 import com.ryanv97.blokkit.Blokkit;
-import com.ryanv97.blokkit.client.gui.GuiName;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 public class EntityBlokkit extends EntityTameable
 {
-    private int exp;
-    private int level;
-    String name = "Blokkit";
-    private boolean canLevel = false;
+    public int maxExp = 200;
+    public double hplvl = 20.0D;
+    private int dmglvl = 2;
+    public static Item food;
 
     public EntityBlokkit(World world)
     {
         super(world);
         setSize(0.6F, 0.8F);
+        this.getNavigator().setAvoidsWater(true);
         this.isImmuneToFire = true;
         this.tasks.addTask(1, this.aiSit);
         this.tasks.addTask(2, new EntityAILeapAtTarget(this, 0.2F));
@@ -44,8 +43,8 @@ public class EntityBlokkit extends EntityTameable
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
         setTamed(false);
 
-        this.exp=0;
-        this.level=1;
+        this.dataWatcher.addObject(18,0); //Level
+        this.dataWatcher.addObject(19,0); //Exp
     }
 
     @Override
@@ -67,48 +66,43 @@ public class EntityBlokkit extends EntityTameable
     protected void updateAITasks()
     {
         super.updateAITasks();
-        if(canLevel)
-        {
-            this.setCustomNameTag(EnumChatFormatting.GOLD+"!"+EnumChatFormatting.WHITE+ name +EnumChatFormatting.GOLD+"!");
-        }
     }
 
     public void levelUp()
     {
-        //this.health = getHealth();
         EntityPlayer entityplayer = (EntityPlayer)this.getOwner();
         this.worldObj.playSoundAtEntity(entityplayer, "random.levelup", 1.0F, 1.0F);
-        this.level += 1;
-        this.exp = 0;
-        this.canLevel = true;
-
-        //getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.hplvl + 5.0D);
-        //this.maxhealth += 5.0F;
-        //heal(this.maxhealth);
+        this.dataWatcher.updateObject(18, this.getLevel() + 1);
+        this.dataWatcher.updateObject(19, 0);
+        this.hplvl += 2.0D;
+        this.dmglvl += 1;
+        getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.hplvl);
+        heal((float)this.hplvl);
     }
 
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
+        getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(40.0D);
         getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.27D);
     }
 
     public boolean attackEntityAsMob(Entity par1Entity)
     {
-        int i = isTamed() ? 6 : 2;
+        int i = isTamed() ? dmglvl : 2;
         return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), i);
     }
 
     public void onKillEntity(EntityLivingBase entity) {
         EntityPlayer player = (EntityPlayer)this.getOwner();
-        int xp = 10;
-        if(entity instanceof EntityMob)
-            xp=20;
-        if(entity instanceof EntityAnimal)
-            xp=5;
-        this.exp+=xp;
-        if(this.exp>=200)
-            levelUp();
+            int xp = 10;
+            if (entity instanceof EntityMob)
+                xp = 20;
+            if (entity instanceof EntityAnimal)
+                xp = 5;
+            this.dataWatcher.updateObject(19, this.getExp()+xp);
+            if (this.getExp() >= this.maxExp)
+                levelUp();
     }
 
     public boolean interact(EntityPlayer par1EntityPlayer) {
@@ -120,11 +114,8 @@ public class EntityBlokkit extends EntityTameable
                 if (!this.worldObj.isRemote)
                 {
                     setTamed(true);
-                    setAlwaysRenderNameTag(true);
-                    setCustomNameTag(name);
-                    setPathToEntity((PathEntity)null);
+                    setPathToEntity((PathEntity) null);
                     this.aiSit.setSitting(false);
-                    setHealth(40.0F);
                     setOwner(par1EntityPlayer.getCommandSenderName());
                     playTameEffect(false);
                     this.worldObj.setEntityState(this, (byte)7);
@@ -133,15 +124,15 @@ public class EntityBlokkit extends EntityTameable
             }
             else
             {
-                if(itemStack!=null && itemStack.getItem()==Items.apple)
+                if(this.getHealth()<this.getMaxHealth() && itemStack!=null && itemStack.getItem().equals(this.food))
                 {
                     if (!par1EntityPlayer.capabilities.isCreativeMode)
                     {
                         itemStack.stackSize -= 1;
                     }
 
-                    heal(5.0F);
-                    generateRandomParticles("heart");
+                    heal(10.0F);
+                    generateRandomParticles("magicCrit");
 
                     if (itemStack.stackSize <= 0)
                     {
@@ -167,13 +158,51 @@ public class EntityBlokkit extends EntityTameable
     }
 
     @Override
+    public void readEntityFromNBT(NBTTagCompound compound)
+    {
+        super.readEntityFromNBT(compound);
+        this.hplvl = compound.getFloat("hp");
+        this.dataWatcher.updateObject(18, compound.getInteger("lvl"));
+        this.dataWatcher.updateObject(19, compound.getInteger("exp"));
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound)
+    {
+        super.writeEntityToNBT(compound);
+        compound.setDouble("hp",hplvl);
+        compound.setInteger("lvl", this.dataWatcher.getWatchableObjectInt(18));
+        compound.setInteger("exp", this.dataWatcher.getWatchableObjectInt(19));
+    }
+
+    public int getLevel()
+    {
+        return this.dataWatcher.getWatchableObjectInt(18);
+    }
+
+    public int getExp()
+    {
+        return this.dataWatcher.getWatchableObjectInt(19);
+    }
+
+    public void setFood(String item)
+    {
+        this.food = (Item)Item.itemRegistry.getObject(item);
+    }
+
+    @Override
+    protected String getHurtSound() {
+        return "step.stone";
+    }
+
+    @Override
+    protected String getDeathSound() {
+        return "dig.stone";
+    }
+
+    @Override
     public EntityAgeable createChild(EntityAgeable var1)
     {
         return null;
-    }
-
-    public void setBlokkitName(String name)
-    {
-        this.setCustomNameTag(name);
     }
 }
