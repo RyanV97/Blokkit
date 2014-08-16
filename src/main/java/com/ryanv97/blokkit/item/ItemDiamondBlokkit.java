@@ -1,11 +1,9 @@
 package com.ryanv97.blokkit.item;
 
-import com.ryanv97.blokkit.entity.EntityBlokkit;
-import com.ryanv97.blokkit.entity.EntityDiamondBlokkit;
+import com.ryanv97.blokkit.entity.basic.EntityDiamondBlokkit;
 import net.minecraft.block.Block;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Facing;
 import net.minecraft.util.MathHelper;
@@ -50,20 +48,17 @@ public class ItemDiamondBlokkit extends ItemBlokkit
     {
             Entity entity = null;
 
-            for (int j = 0; j < 1; ++j)
-            {
-                EntityDiamondBlokkit blokkit = new EntityDiamondBlokkit(par0World);
-                entity = blokkit;
+            EntityDiamondBlokkit blokkit = new EntityDiamondBlokkit(par0World);
+            entity = blokkit;
 
-                if (entity != null && entity instanceof EntityLivingBase)
-                {
-                    EntityLiving entityliving = (EntityLiving)entity;
-                    entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F), 0.0F);
-                    entityliving.rotationYawHead = entityliving.rotationYaw;
-                    entityliving.renderYawOffset = entityliving.rotationYaw;
-                    par0World.spawnEntityInWorld(entity);
-                    entityliving.playLivingSound();
-                }
+            if (entity != null && entity instanceof EntityLivingBase)
+            {
+                EntityLiving entityliving = (EntityLiving)entity;
+                entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F), 0.0F);
+                entityliving.rotationYawHead = entityliving.rotationYaw;
+                entityliving.renderYawOffset = entityliving.rotationYaw;
+                par0World.spawnEntityInWorld(entity);
+                entityliving.playLivingSound();
             }
 
             return entity;

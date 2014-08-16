@@ -1,6 +1,8 @@
-package com.ryanv97.blokkit.entity;
+package com.ryanv97.blokkit.entity.basic;
 
 import com.ryanv97.blokkit.Blokkit;
+import com.ryanv97.blokkit.entity.big.EntityBigBlokkit;
+import com.ryanv97.blokkit.entity.big.EntityBigDiamondBlokkit;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
@@ -14,15 +16,17 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 public class EntityBlokkit extends EntityTameable
 {
-    public int maxExp = 200;
     public double hplvl = 20.0D;
-    private int dmglvl = 2;
+    public int dmglvl = 2;
+    public int evolvelvl = 5;
+    public String type;
     public static Item food;
 
     public EntityBlokkit(World world)
@@ -43,8 +47,9 @@ public class EntityBlokkit extends EntityTameable
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
         setTamed(false);
 
-        this.dataWatcher.addObject(18,0); //Level
+        this.dataWatcher.addObject(18,1); //Level
         this.dataWatcher.addObject(19,0); //Exp
+        this.dataWatcher.addObject(20,100); //MaxExp
     }
 
     @Override
@@ -73,11 +78,34 @@ public class EntityBlokkit extends EntityTameable
         EntityPlayer entityplayer = (EntityPlayer)this.getOwner();
         this.worldObj.playSoundAtEntity(entityplayer, "random.levelup", 1.0F, 1.0F);
         this.dataWatcher.updateObject(18, this.getLevel() + 1);
-        this.dataWatcher.updateObject(19, 0);
-        this.hplvl += 2.0D;
-        this.dmglvl += 1;
-        getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.hplvl);
-        heal((float)this.hplvl);
+        if(getLevel()>=evolvelvl){
+            evolve(entityplayer);
+        }else{
+            this.dataWatcher.updateObject(19, 0);
+            this.hplvl += 2.0D;
+            this.dmglvl += 1;
+            this.dataWatcher.updateObject(20, getMaxExp()+40);
+            getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.hplvl);
+            heal((float)this.hplvl);
+        }
+    }
+
+    public void evolve(EntityPlayer player)
+    {
+        if(!this.worldObj.isRemote)
+        {
+            EntityBigBlokkit newBlokkit = determineNewEntity();
+
+            newBlokkit.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rand.nextFloat() * 180.0F, 0.0F);
+            newBlokkit.setTamed(true);
+            newBlokkit.setPathToEntity((PathEntity) null);
+            newBlokkit.heal(newBlokkit.getMaxHealth());
+            newBlokkit.setOwner(player.getCommandSenderName());
+            newBlokkit.playTameEffect(false);
+            player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + "Your Blokkit Evolved into a Big Blokkit!"));
+            this.worldObj.spawnEntityInWorld(newBlokkit);
+            this.setDead();
+        }
     }
 
     protected void applyEntityAttributes()
@@ -101,7 +129,7 @@ public class EntityBlokkit extends EntityTameable
             if (entity instanceof EntityAnimal)
                 xp = 5;
             this.dataWatcher.updateObject(19, this.getExp()+xp);
-            if (this.getExp() >= this.maxExp)
+            if (this.getExp() >= this.getMaxExp())
                 levelUp();
     }
 
@@ -132,6 +160,7 @@ public class EntityBlokkit extends EntityTameable
                     }
 
                     heal(10.0F);
+                    levelUp();
                     generateRandomParticles("magicCrit");
 
                     if (itemStack.stackSize <= 0)
@@ -164,6 +193,7 @@ public class EntityBlokkit extends EntityTameable
         this.hplvl = compound.getFloat("hp");
         this.dataWatcher.updateObject(18, compound.getInteger("lvl"));
         this.dataWatcher.updateObject(19, compound.getInteger("exp"));
+        this.dataWatcher.updateObject(20, compound.getInteger("maxExp"));
     }
 
     @Override
@@ -173,6 +203,7 @@ public class EntityBlokkit extends EntityTameable
         compound.setDouble("hp",hplvl);
         compound.setInteger("lvl", this.dataWatcher.getWatchableObjectInt(18));
         compound.setInteger("exp", this.dataWatcher.getWatchableObjectInt(19));
+        compound.setInteger("maxExp", this.dataWatcher.getWatchableObjectInt(20));
     }
 
     public int getLevel()
@@ -185,9 +216,27 @@ public class EntityBlokkit extends EntityTameable
         return this.dataWatcher.getWatchableObjectInt(19);
     }
 
+    public int getMaxExp()
+    {
+        return this.dataWatcher.getWatchableObjectInt(20);
+    }
+
     public void setFood(String item)
     {
         this.food = (Item)Item.itemRegistry.getObject(item);
+    }
+
+    public EntityBigBlokkit determineNewEntity()
+    {
+        if(this.type=="diamond")
+        {
+            return new EntityBigDiamondBlokkit(this.worldObj, this.getMaxExp(), this.hplvl, this.dmglvl);
+        }
+
+
+        else {
+            return null;
+        }
     }
 
     @Override

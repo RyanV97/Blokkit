@@ -1,7 +1,7 @@
 package com.ryanv97.blokkit.handler;
 
 import com.ryanv97.blokkit.client.gui.GuiStats;
-import com.ryanv97.blokkit.entity.EntityBlokkit;
+import com.ryanv97.blokkit.entity.basic.EntityBlokkit;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

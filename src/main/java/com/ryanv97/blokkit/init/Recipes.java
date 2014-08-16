@@ -11,7 +11,6 @@ public class Recipes
     public static void init()
     {
         GameRegistry.addRecipe(new ItemStack(ModItems.diamondBlokkit),"DDD","DRD","DDD",'D', new ItemStack(Items.diamond),'R', new ItemStack(Items.redstone));
-        GameRegistry.addRecipe(new ItemStack(ModItems.glowstoneBlokkit),"GGG","GRG","GGG",'G', new ItemStack(Items.glowstone_dust),'R', new ItemStack(Items.redstone));
         GameRegistry.addRecipe(new ItemStack(ModItems.goldBlokkit),"GGG","GRG","GGG",'G', new ItemStack(Items.gold_ingot),'R', new ItemStack(Items.redstone));
         GameRegistry.addRecipe(new ItemStack(ModItems.grassBlokkit),"DDD","DRD","DDD",'D', new ItemStack(Blocks.dirt),'R', new ItemStack(Items.redstone));
         GameRegistry.addRecipe(new ItemStack(ModItems.ironBlokkit),"III","IRI","III",'I', new ItemStack(Items.iron_ingot),'R', new ItemStack(Items.redstone));

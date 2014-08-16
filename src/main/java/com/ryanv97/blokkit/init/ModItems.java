@@ -6,7 +6,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class ModItems
 {
     public static final ItemDiamondBlokkit diamondBlokkit = new ItemDiamondBlokkit();
-    public static final ItemGlowstoneBlokkit glowstoneBlokkit = new ItemGlowstoneBlokkit();
     public static final ItemGoldBlokkit goldBlokkit = new ItemGoldBlokkit();
     public static final ItemGrassBlokkit grassBlokkit = new ItemGrassBlokkit();
     public static final ItemIronBlokkit ironBlokkit = new ItemIronBlokkit();
@@ -16,7 +15,6 @@ public class ModItems
     public static void init()
     {
         GameRegistry.registerItem(diamondBlokkit,"diamondBlokkit");
-        GameRegistry.registerItem(glowstoneBlokkit,"glowstoneBlokkit");
         GameRegistry.registerItem(goldBlokkit,"goldBlokkit");
         GameRegistry.registerItem(grassBlokkit,"grassBlokkit");
         GameRegistry.registerItem(ironBlokkit,"ironBlokkit");

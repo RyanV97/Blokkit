@@ -1,13 +1,10 @@
 package com.ryanv97.blokkit.client.model;
 
-import com.ryanv97.blokkit.entity.EntityBlokkit;
+import com.ryanv97.blokkit.entity.basic.EntityBlokkit;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.util.MathHelper;
-import org.lwjgl.opengl.GL11;
 
 public class ModelBlokkit extends ModelBase
 {

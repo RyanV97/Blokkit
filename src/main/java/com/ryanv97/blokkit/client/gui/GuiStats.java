@@ -1,6 +1,6 @@
 package com.ryanv97.blokkit.client.gui;
 
-import com.ryanv97.blokkit.entity.EntityBlokkit;
+import com.ryanv97.blokkit.entity.basic.EntityBlokkit;
 import com.ryanv97.blokkit.util.Reference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -48,7 +48,7 @@ public class GuiStats extends GuiScreen
 
         this.drawString(fontRendererObj,EnumChatFormatting.WHITE+"HP: "+EnumChatFormatting.RESET +(int)entityBlokkit.getHealth()+"/"+(int)entityBlokkit.getMaxHealth(),localWidth+73,localHeight+20,colour);
         this.drawString(fontRendererObj,"Level: "+entityBlokkit.getLevel(),localWidth+73,localHeight+32,0xffFFFFFF);
-        this.drawString(fontRendererObj,"EXP: "+entityBlokkit.getExp()+"/"+entityBlokkit.maxExp,localWidth+73,localHeight+45,0xffFFFFFF);
+        this.drawString(fontRendererObj,"EXP: "+entityBlokkit.getExp()+"/"+entityBlokkit.getMaxExp(),localWidth+73,localHeight+45,0xffFFFFFF);
 
         this.field_147033_y = (float)par1;
         this.field_147032_z = (float)par2;
