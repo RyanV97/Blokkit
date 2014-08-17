@@ -1,15 +1,13 @@
 package com.ryanv97.blokkit.entity.giant;
 
-import com.ryanv97.blokkit.entity.basic.EntityBlokkit;
+import com.ryanv97.blokkit.entity.big.EntityBigDiamondBlokkit;
 import net.minecraft.world.World;
 
-public class EntityGiantDiamondBlokkit extends EntityBlokkit
+public class EntityGiantDiamondBlokkit extends EntityBigDiamondBlokkit
 {
-    public EntityGiantDiamondBlokkit(World world, int maxExp, double hplvl, int dmglvl)
+    public EntityGiantDiamondBlokkit(World world)
     {
         super(world);
-        this.dataWatcher.updateObject(20, this.getMaxExp());
-        this.hplvl = hplvl;
-        this.dmglvl = dmglvl;
+        setSize(1.8F, 2.4F);
     }
 }

@@ -1,27 +1,38 @@
-package com.ryanv97.blokkit.entity.big;
+package com.ryanv97.blokkit.entity.basic;
 
-import com.ryanv97.blokkit.entity.basic.EntityDiamondBlokkit;
-import com.ryanv97.blokkit.entity.giant.EntityGiantDiamondBlokkit;
+import com.ryanv97.blokkit.entity.EntityBlokkit;
+import com.ryanv97.blokkit.entity.big.EntityBigWoodBlokkit;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
-public class EntityBigDiamondBlokkit extends EntityDiamondBlokkit
+public class EntityWoodBlokkit extends EntityBlokkit
 {
-    public EntityBigDiamondBlokkit(World world)
+    public EntityWoodBlokkit(World world)
     {
         super(world);
-        setSize(1.2F, 1.6F);
+        setFood(new ItemStack(Items.stick));
+        hplvl = 15.0D;
+        isImmuneToFire = false;
+        this.dataWatcher.addObject(20, 100);
+    }
+
+    protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+        getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(15.0D);
     }
 
     public void evolve(EntityPlayer player)
     {
         if (!this.worldObj.isRemote)
         {
-            EntityGiantDiamondBlokkit newBlokkit = new EntityGiantDiamondBlokkit(this.worldObj);
+            EntityBigWoodBlokkit newBlokkit = new EntityBigWoodBlokkit(this.worldObj);
             newBlokkit.dataWatcher.updateObject(20, this.getMaxExp());
             newBlokkit.hplvl = hplvl;
             newBlokkit.evolvelvl = evolvelvl;

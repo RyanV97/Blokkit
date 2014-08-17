@@ -1,7 +1,7 @@
 package com.ryanv97.blokkit.entity.big;
 
-import com.ryanv97.blokkit.entity.basic.EntityDiamondBlokkit;
-import com.ryanv97.blokkit.entity.giant.EntityGiantDiamondBlokkit;
+import com.ryanv97.blokkit.entity.basic.EntityGrassBlokkit;
+import com.ryanv97.blokkit.entity.giant.EntityGiantGrassBlokkit;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.pathfinding.PathEntity;
@@ -9,9 +9,9 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
-public class EntityBigDiamondBlokkit extends EntityDiamondBlokkit
+public class EntityBigGrassBlokkit extends EntityGrassBlokkit
 {
-    public EntityBigDiamondBlokkit(World world)
+    public EntityBigGrassBlokkit(World world)
     {
         super(world);
         setSize(1.2F, 1.6F);
@@ -21,7 +21,7 @@ public class EntityBigDiamondBlokkit extends EntityDiamondBlokkit
     {
         if (!this.worldObj.isRemote)
         {
-            EntityGiantDiamondBlokkit newBlokkit = new EntityGiantDiamondBlokkit(this.worldObj);
+            EntityGiantGrassBlokkit newBlokkit = new EntityGiantGrassBlokkit(this.worldObj);
             newBlokkit.dataWatcher.updateObject(20, this.getMaxExp());
             newBlokkit.hplvl = hplvl;
             newBlokkit.evolvelvl = evolvelvl;

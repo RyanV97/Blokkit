@@ -7,11 +7,5 @@ item.blokkit:ironBlokkit.name=Iron Blokkit
 item.blokkit:stoneBlokkit.name=Stone Blokkit
 item.blokkit:woodBlokkit.name=Wood Blokkit
 
-#Blocks
-#tile.blokkit:blockName.name=Block Name
-
-#Entity
-entity.blokkit.diamondBlokkit.name=Diamond Blokkit
-
 #Other
 itemGroup.blokkit=Blokkits

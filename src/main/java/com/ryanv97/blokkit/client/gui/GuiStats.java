@@ -1,6 +1,6 @@
 package com.ryanv97.blokkit.client.gui;
 
-import com.ryanv97.blokkit.entity.basic.EntityBlokkit;
+import com.ryanv97.blokkit.entity.EntityBlokkit;
 import com.ryanv97.blokkit.util.Reference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -13,12 +13,11 @@ import org.lwjgl.opengl.GL11;
 public class GuiStats extends GuiScreen
 {
     private static final ResourceLocation background = new ResourceLocation(Reference.MODID.toLowerCase(), "textures/gui/guiStats.png");
+    DataWatcher dw;
     private EntityBlokkit entityBlokkit;
     private float field_147033_y;
     private float field_147032_z;
     private GuiButton buttonHp;
-    DataWatcher dw;
-
     private int texWidth = 256;
     private int texHeight = 256;
 
@@ -39,19 +38,19 @@ public class GuiStats extends GuiScreen
         GuiInventory.func_147046_a(localWidth + 43, localHeight + 60, 30, (float) (localWidth + 51) - this.field_147033_y, (float) (localHeight + 75 - 50) - this.field_147032_z, this.entityBlokkit);
 
         int colour = 0xFFFFFF;
-        if(entityBlokkit.getHealth()>(entityBlokkit.getMaxHealth()/2))
+        if (entityBlokkit.getHealth() > (entityBlokkit.getMaxHealth() / 2))
             colour = 0x00CC00;
-        if(entityBlokkit.getHealth()<=(entityBlokkit.getMaxHealth()/2))
+        if (entityBlokkit.getHealth() <= (entityBlokkit.getMaxHealth() / 2))
             colour = 0xFF9933;
-        if(entityBlokkit.getHealth()<=(entityBlokkit.getMaxHealth()/4))
+        if (entityBlokkit.getHealth() <= (entityBlokkit.getMaxHealth() / 4))
             colour = 0xCC0000;
 
-        this.drawString(fontRendererObj,EnumChatFormatting.WHITE+"HP: "+EnumChatFormatting.RESET +(int)entityBlokkit.getHealth()+"/"+(int)entityBlokkit.getMaxHealth(),localWidth+73,localHeight+20,colour);
-        this.drawString(fontRendererObj,"Level: "+entityBlokkit.getLevel(),localWidth+73,localHeight+32,0xffFFFFFF);
-        this.drawString(fontRendererObj,"EXP: "+entityBlokkit.getExp()+"/"+entityBlokkit.getMaxExp(),localWidth+73,localHeight+45,0xffFFFFFF);
+        this.drawString(fontRendererObj, EnumChatFormatting.WHITE + "HP: " + EnumChatFormatting.RESET + (int) entityBlokkit.getHealth() + "/" + (int) entityBlokkit.getMaxHealth(), localWidth + 73, localHeight + 20, colour);
+        this.drawString(fontRendererObj, "Level: " + entityBlokkit.getLevel(), localWidth + 73, localHeight + 32, 0xffFFFFFF);
+        this.drawString(fontRendererObj, "EXP: " + entityBlokkit.getExp() + "/" + entityBlokkit.getMaxExp(), localWidth + 73, localHeight + 45, 0xffFFFFFF);
 
-        this.field_147033_y = (float)par1;
-        this.field_147032_z = (float)par2;
+        this.field_147033_y = (float) par1;
+        this.field_147032_z = (float) par2;
         super.drawScreen(par1, par2, par3);
     }
 }

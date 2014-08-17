@@ -1,6 +1,7 @@
 package com.ryanv97.blokkit.client.model;
 
-import com.ryanv97.blokkit.entity.basic.EntityBlokkit;
+
+import com.ryanv97.blokkit.entity.EntityBlokkit;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -182,17 +183,27 @@ public class ModelGiantBlokkit extends ModelBase
 
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
     {
-        EntityBlokkit entityBlokkit = (EntityBlokkit)entity;
+        EntityBlokkit entityBlokkit = (EntityBlokkit) entity;
 
-        this.body.offsetY=0F;
-        this.rightLeg.offsetY=0F;
-        this.rightLeg.offsetY=0F;
-        this.leftArm.offsetY=0F;
-        this.leftLeg.offsetY=0F;
-        this.eye1.offsetY=0F;
-        this.eye2.offsetY=0F;
-        this.eye3.offsetY=0F;
-        this.eye4.offsetY=0F;
+        this.body.offsetY = 0F;
+        this.rightLeg.offsetY = 0F;
+        this.rightArm.offsetY = 0F;
+        this.leftArm.offsetY = 0F;
+        this.leftLeg.offsetY = 0F;
+        this.eye1.offsetY = 0F;
+        this.eye2.offsetY = 0F;
+        this.eye3.offsetY = 0F;
+        this.eye4.offsetY = 0F;
+        this.Shape1.offsetY = 0F;
+        this.Shape2.offsetY = 0F;
+        this.Shape3.offsetY = 0F;
+        this.Shape4.offsetY = 0F;
+        this.Shape5.offsetY = 0F;
+        this.Shape6.offsetY = 0F;
+        this.Shape7.offsetY = 0F;
+        this.Shape8.offsetY = 0F;
+        this.Shape9.offsetY = 0F;
+        this.Shape10.offsetY = 0F;
 
         this.rightLeg.rotateAngleX = (MathHelper.cos(f * 0.6662F) * 1.4F * f1 * 0.5F);
         this.leftArm.rotateAngleX = (MathHelper.cos(f * 0.6662F) * 1.4F * f1 * 0.5F);
@@ -201,27 +212,37 @@ public class ModelGiantBlokkit extends ModelBase
         this.leftArm.rotateAngleY = 0.0F;
         this.leftLeg.rotateAngleY = 0.0F;
         this.rightLeg.rotateAngleY = 0.0F;
-        this.rightLeg.rotateAngleX = (MathHelper.cos(f * 0.6662F + 3.141593F) * 1.4F * f1 * 0.5F);
+        this.rightArm.rotateAngleX = (MathHelper.cos(f * 0.6662F + 3.141593F) * 1.4F * f1 * 0.5F);
 
-        if(entityBlokkit.isSitting()||entityBlokkit.isSneaking())
+        if (entityBlokkit.isSitting() || entityBlokkit.isSneaking())
         {
             float offset = 0.15F;
-            this.body.offsetY=offset;
-            this.rightLeg.offsetY=offset;
-            this.rightLeg.offsetY=offset;
-            this.leftArm.offsetY=offset;
-            this.leftLeg.offsetY=offset;
-            this.eye1.offsetY=offset;
-            this.eye2.offsetY=offset;
-            this.eye3.offsetY=offset;
-            this.eye4.offsetY=offset;
+            this.body.offsetY = offset;
+            this.rightLeg.offsetY = offset;
+            this.rightArm.offsetY = offset;
+            this.leftArm.offsetY = offset;
+            this.leftLeg.offsetY = offset;
+            this.eye1.offsetY = offset;
+            this.eye2.offsetY = offset;
+            this.eye3.offsetY = offset;
+            this.eye4.offsetY = offset;
+            this.Shape1.offsetY = offset;
+            this.Shape2.offsetY = offset;
+            this.Shape3.offsetY = offset;
+            this.Shape4.offsetY = offset;
+            this.Shape5.offsetY = offset;
+            this.Shape6.offsetY = offset;
+            this.Shape7.offsetY = offset;
+            this.Shape8.offsetY = offset;
+            this.Shape9.offsetY = offset;
+            this.Shape10.offsetY = offset;
 
-            this.rightLeg.rotateAngleX += -((float)Math.PI / 5F);
-            this.leftArm.rotateAngleX += -((float)Math.PI / 5F);
-            this.rightLeg.rotateAngleX = -((float)Math.PI * 2F / 5F);
-            this.leftLeg.rotateAngleX = -((float)Math.PI * 2F / 5F);
-            this.rightLeg.rotateAngleY = ((float)Math.PI / 10F);
-            this.leftLeg.rotateAngleY = -((float)Math.PI / 10F);
+            this.rightArm.rotateAngleX += -((float) Math.PI / 5F);
+            this.leftArm.rotateAngleX += -((float) Math.PI / 5F);
+            this.rightLeg.rotateAngleX = -((float) Math.PI * 2F / 5F);
+            this.leftLeg.rotateAngleX = -((float) Math.PI * 2F / 5F);
+            this.rightLeg.rotateAngleY = ((float) Math.PI / 10F);
+            this.leftLeg.rotateAngleY = -((float) Math.PI / 10F);
         }
     }
 }
