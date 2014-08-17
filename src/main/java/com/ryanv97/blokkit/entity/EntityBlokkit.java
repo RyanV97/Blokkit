@@ -146,7 +146,6 @@ public class EntityBlokkit extends EntityTameable
                     }
 
                     heal(10.0F);
-                    levelUp();
                     generateRandomParticles("magicCrit");
 
                     if (itemStack.stackSize <= 0)
